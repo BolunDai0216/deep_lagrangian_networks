@@ -96,3 +96,6 @@ ENV/
 # Pycharm project files:
 .idea/
 /.project
+
+# VS Code
+.vscode/
