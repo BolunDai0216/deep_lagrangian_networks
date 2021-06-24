@@ -212,7 +212,11 @@ class DeepLagrangianNetwork(tf.keras.Model):
         # Compute Gravitational forces
         G = tf.squeeze(derV)
 
-        return M, C, G
+        # Computer tau_pred
+        Mddq = tf.squeeze(M @ acceleration[:, :, tf.newaxis])
+        tau_pred = Mddq + C + G
+
+        return tau_pred, M, C, G
 
 
 def main():
