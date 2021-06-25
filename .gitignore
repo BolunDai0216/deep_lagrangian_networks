@@ -102,3 +102,6 @@ ENV/
 
 # Logs
 log/
+
+# models
+trained_models/
