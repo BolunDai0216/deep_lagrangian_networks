@@ -1,0 +1,2 @@
+model_checkpoint_path: "tf_model_2000-3"
+all_model_checkpoint_paths: "tf_model_2000-3"
