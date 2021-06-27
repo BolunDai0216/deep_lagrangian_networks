@@ -127,7 +127,7 @@ class Train:
         print("                Torque MSE = {0:.3e}".format(err_tau))
         print("              Inertial MSE = {0:.3e}".format(err_m))
         print("Coriolis & Centrifugal MSE = {0:.3e}".format(err_c))
-        print("         Gravitational MSE = {0:.3e}".format(err_m))
+        print("         Gravitational MSE = {0:.3e}".format(err_g))
 
         plot_test(
             delan_tau,
