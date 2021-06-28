@@ -2,11 +2,16 @@ import dill as pickle
 import numpy as np
 import torch
 
+
 def init_env(args):
 
     # Set the NumPy Formatter:
-    np.set_printoptions(suppress=True, precision=2, linewidth=500,
-                        formatter={'float_kind': lambda x: "{0:+08.2f}".format(x)})
+    np.set_printoptions(
+        suppress=True,
+        precision=2,
+        linewidth=500,
+        formatter={"float_kind": lambda x: "{0:+08.2f}".format(x)},
+    )
 
     # Read the parameters:
     seed, cuda_id, cuda_flag = args.s[0], args.i[0], args.c[0]
@@ -28,8 +33,7 @@ def init_env(args):
 
 
 def load_dataset(n_characters=3, filename="data/DeLaN_Data.pickle"):
-
-    with open(filename, 'rb') as f:
+    with open(filename, "rb") as f:
         data = pickle.load(f)
 
     n_dof = 2
@@ -39,14 +43,29 @@ def load_dataset(n_characters=3, filename="data/DeLaN_Data.pickle"):
     # test_idx = np.array([0, 4, 6], dtype=int)
 
     train_labels, test_labels = [], []
-    train_qp, train_qv, train_qa, train_tau = np.zeros((0, n_dof)), np.zeros((0, n_dof)), np.zeros((0, n_dof)), np.zeros((0, n_dof))
-    test_qp, test_qv, test_qa, test_tau = np.zeros((0, n_dof)), np.zeros((0, n_dof)), np.zeros((0, n_dof)), np.zeros((0, n_dof))
-    test_m, test_c, test_g = np.zeros((0, n_dof)), np.zeros((0, n_dof)), np.zeros((0, n_dof))
+    train_qp, train_qv, train_qa, train_tau = (
+        np.zeros((0, n_dof)),
+        np.zeros((0, n_dof)),
+        np.zeros((0, n_dof)),
+        np.zeros((0, n_dof)),
+    )
+    test_qp, test_qv, test_qa, test_tau = (
+        np.zeros((0, n_dof)),
+        np.zeros((0, n_dof)),
+        np.zeros((0, n_dof)),
+        np.zeros((0, n_dof)),
+    )
+    test_m, test_c, test_g = (
+        np.zeros((0, n_dof)),
+        np.zeros((0, n_dof)),
+        np.zeros((0, n_dof)),
+    )
 
-    divider = [0, ]    # Contains idx between characters for plotting
+    divider = [
+        0,
+    ]  # Contains idx between characters for plotting
 
     for i in range(len(data["labels"])):
-
         if i in test_idx:
             test_labels.append(data["labels"][i])
             test_qp = np.vstack((test_qp, data["qp"][i]))
@@ -65,6 +84,8 @@ def load_dataset(n_characters=3, filename="data/DeLaN_Data.pickle"):
             train_qa = np.vstack((train_qa, data["qa"][i]))
             train_tau = np.vstack((train_tau, data["tau"][i]))
 
-    return (train_labels, train_qp, train_qv, train_qa, train_tau), \
-           (test_labels, test_qp, test_qv, test_qa, test_tau, test_m, test_c, test_g),\
-           divider
+    return (
+        (train_labels, train_qp, train_qv, train_qa, train_tau),
+        (test_labels, test_qp, test_qv, test_qa, test_tau, test_m, test_c, test_g),
+        divider,
+    )

@@ -16,8 +16,11 @@ class Train:
     def __init__(self):
         # Read the dataset:
         n_dof = 2
-        cuda = 1
-        train_data, test_data, self.divider = load_dataset()
+        cuda = 0
+        # train_data, test_data, self.divider = load_dataset()
+        train_data, test_data, self.divider = load_dataset(
+            filename="data/sine_track2.pickle"
+        )
         (
             self.train_labels,
             self.train_qp,
@@ -95,12 +98,13 @@ class Train:
             l_mem /= float(n_batches)
 
             # if epoch_i == 1 or np.mod(epoch_i, 50) == 0:
-            print("*******")
             print("Epoch {0:05d}: ".format(epoch_i), end=" ")
-            print("Loss = {0:.3e}".format(l_mem), end=", ")
+            print("Loss = {0:.3e}\n".format(l_mem))
 
-            if np.mod(epoch_i, 1000) == 0:
-                filename = "trained_models/{}/tf_model_{}".format(self.stamp, epoch_i)
+            if np.mod(epoch_i + 1, 1000) == 0:
+                filename = "trained_models/{}/tf_model_{}".format(
+                    self.stamp, epoch_i + 1
+                )
                 self.checkpoint.save("{}".format(filename))
 
     def test(self, filename):
@@ -166,7 +170,9 @@ class Train:
 def main():
     train = Train()
     # train.train()
-    train.test("trained_models/20210623-223506/tf_model_9000-10")
+    # train.test("trained_models/{}/tf_model_10000-10".format(train.stamp))
+
+    train.test("trained_models/20210627-210606/tf_model_10000-10")
 
 
 if __name__ == "__main__":
